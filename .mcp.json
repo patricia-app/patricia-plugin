@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "patricia": {
+      "type": "http",
+      "url": "https://api.patricia.app/v1/mcp"
+    }
+  }
+}

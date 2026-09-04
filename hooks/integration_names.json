@@ -1,0 +1,466 @@
+{
+  "apps": [
+    {
+      "slug": "activecampaign",
+      "name": "ActiveCampaign",
+      "aliases": ["active campaign"],
+      "hosts": ["*.api-us1.com"]
+    },
+    {
+      "slug": "airtable",
+      "name": "Airtable",
+      "aliases": [],
+      "hosts": ["api.airtable.com"]
+    },
+    {
+      "slug": "asana",
+      "name": "Asana",
+      "aliases": [],
+      "prompt_match": false,
+      "hosts": ["app.asana.com"]
+    },
+    {
+      "slug": "attio",
+      "name": "Attio",
+      "aliases": [],
+      "hosts": ["api.attio.com"]
+    },
+    {
+      "slug": "bluesky",
+      "name": "Bluesky",
+      "aliases": ["blue sky social"],
+      "hosts": ["bsky.social"]
+    },
+    {
+      "slug": "calcom",
+      "name": "Cal.com",
+      "aliases": ["calcom"],
+      "hosts": ["api.cal.com"]
+    },
+    {
+      "slug": "calendly",
+      "name": "Calendly",
+      "aliases": [],
+      "hosts": ["api.calendly.com"]
+    },
+    {
+      "slug": "canva",
+      "name": "Canva",
+      "aliases": [],
+      "hosts": ["api.canva.com"]
+    },
+    {
+      "slug": "clickup",
+      "name": "ClickUp",
+      "aliases": ["click up"],
+      "hosts": ["api.clickup.com"]
+    },
+    {
+      "slug": "dataforseo",
+      "name": "DataForSEO",
+      "aliases": ["data for seo"],
+      "hosts": ["api.dataforseo.com"]
+    },
+    {
+      "slug": "discord",
+      "name": "Discord",
+      "aliases": [],
+      "prompt_match": false,
+      "hosts": ["api.discord.com", "discord.com"]
+    },
+    {
+      "slug": "docusign",
+      "name": "DocuSign",
+      "aliases": ["docu sign"],
+      "hosts": ["api.docusign.net"]
+    },
+    {
+      "slug": "dropbox",
+      "name": "Dropbox",
+      "aliases": [],
+      "hosts": ["api.dropboxapi.com", "content.dropboxapi.com"]
+    },
+    {
+      "slug": "facebook",
+      "name": "Facebook",
+      "aliases": [],
+      "hosts": ["graph.facebook.com"]
+    },
+    {
+      "slug": "facebookads",
+      "name": "Facebook Ads",
+      "aliases": ["facebook advertising"],
+      "hosts": ["graph.facebook.com"]
+    },
+    {
+      "slug": "figma",
+      "name": "Figma",
+      "aliases": [],
+      "hosts": ["api.figma.com"]
+    },
+    {
+      "slug": "freshbooks",
+      "name": "FreshBooks",
+      "aliases": ["fresh books"],
+      "hosts": ["api.freshbooks.com"]
+    },
+    {
+      "slug": "github",
+      "name": "GitHub",
+      "aliases": ["git hub"],
+      "hosts": ["api.github.com"]
+    },
+    {
+      "slug": "gitlab",
+      "name": "GitLab",
+      "aliases": ["git lab"],
+      "hosts": ["gitlab.com"]
+    },
+    {
+      "slug": "gmail",
+      "name": "Gmail",
+      "aliases": ["google mail"],
+      "hosts": ["gmail.googleapis.com"]
+    },
+    {
+      "slug": "google_ads",
+      "name": "Google Ads",
+      "aliases": ["google advertising"],
+      "hosts": ["googleads.googleapis.com"]
+    },
+    {
+      "slug": "google_analytics",
+      "name": "Google Analytics",
+      "aliases": ["ga4"],
+      "hosts": ["analyticsadmin.googleapis.com", "analyticsdata.googleapis.com"]
+    },
+    {
+      "slug": "google_search_console",
+      "name": "Google Search Console",
+      "aliases": ["search console"],
+      "hosts": ["searchconsole.googleapis.com"]
+    },
+    {
+      "slug": "googleanalytics",
+      "name": "Google Analytics",
+      "aliases": ["google analytics reporting"],
+      "hosts": ["analyticsadmin.googleapis.com", "analyticsdata.googleapis.com"]
+    },
+    {
+      "slug": "googlebusiness",
+      "name": "Google Business Profile",
+      "aliases": ["google my business"],
+      "hosts": ["mybusiness.googleapis.com", "mybusinessbusinessinformation.googleapis.com"]
+    },
+    {
+      "slug": "googlecalendar",
+      "name": "Google Calendar",
+      "aliases": ["gcal"],
+      "hosts": ["calendar.googleapis.com"]
+    },
+    {
+      "slug": "googledocs",
+      "name": "Google Docs",
+      "aliases": ["google documents"],
+      "hosts": ["docs.googleapis.com"]
+    },
+    {
+      "slug": "googledrive",
+      "name": "Google Drive",
+      "aliases": ["google file storage"],
+      "hosts": ["drive.googleapis.com", "www.googleapis.com"]
+    },
+    {
+      "slug": "googlesheets",
+      "name": "Google Sheets",
+      "aliases": ["google spreadsheets"],
+      "hosts": ["sheets.googleapis.com"]
+    },
+    {
+      "slug": "highlevel",
+      "name": "HighLevel",
+      "aliases": ["go high level", "gohighlevel"],
+      "hosts": ["api.highlevel.com", "services.leadconnectorhq.com"]
+    },
+    {
+      "slug": "hubspot",
+      "name": "HubSpot",
+      "aliases": ["hubspot crm"],
+      "hosts": ["api.hubapi.com", "api.hubspot.com"]
+    },
+    {
+      "slug": "instagram",
+      "name": "Instagram",
+      "aliases": [],
+      "hosts": ["graph.instagram.com"]
+    },
+    {
+      "slug": "intercom",
+      "name": "Intercom",
+      "aliases": [],
+      "prompt_match": false,
+      "hosts": ["api.intercom.io"]
+    },
+    {
+      "slug": "jira",
+      "name": "Jira",
+      "aliases": ["atlassian jira"],
+      "hosts": ["api.atlassian.com"]
+    },
+    {
+      "slug": "klaviyo",
+      "name": "Klaviyo",
+      "aliases": [],
+      "hosts": ["a.klaviyo.com"]
+    },
+    {
+      "slug": "linear",
+      "name": "Linear",
+      "aliases": ["linear issues"],
+      "prompt_match": false,
+      "hosts": ["api.linear.app"]
+    },
+    {
+      "slug": "linkedin",
+      "name": "LinkedIn",
+      "aliases": ["linked in"],
+      "hosts": ["api.linkedin.com"]
+    },
+    {
+      "slug": "mailchimp",
+      "name": "Mailchimp",
+      "aliases": ["mail chimp"],
+      "hosts": ["*.api.mailchimp.com", "api.mailchimp.com"]
+    },
+    {
+      "slug": "metaads",
+      "name": "Meta Ads",
+      "aliases": ["meta advertising"],
+      "hosts": ["graph.facebook.com"]
+    },
+    {
+      "slug": "monday",
+      "name": "Monday.com",
+      "aliases": ["monday work management"],
+      "hosts": ["api.monday.com"]
+    },
+    {
+      "slug": "netsuite",
+      "name": "NetSuite",
+      "aliases": ["oracle netsuite"],
+      "hosts": ["*.suitetalk.api.netsuite.com"]
+    },
+    {
+      "slug": "notion",
+      "name": "Notion",
+      "aliases": ["notion workspace"],
+      "prompt_match": false,
+      "hosts": ["api.notion.com"]
+    },
+    {
+      "slug": "onedrive",
+      "name": "OneDrive",
+      "aliases": ["microsoft onedrive"],
+      "hosts": ["graph.microsoft.com"]
+    },
+    {
+      "slug": "paypal",
+      "name": "PayPal",
+      "aliases": ["pay pal"],
+      "hosts": ["api-m.paypal.com", "api.paypal.com"]
+    },
+    {
+      "slug": "pinterest",
+      "name": "Pinterest",
+      "aliases": [],
+      "hosts": ["api.pinterest.com"]
+    },
+    {
+      "slug": "pipedream",
+      "name": "Pipedream",
+      "aliases": ["pipe dream integrations"],
+      "hosts": ["api.pipedream.com"]
+    },
+    {
+      "slug": "posthog",
+      "name": "PostHog",
+      "aliases": ["post hog"],
+      "hosts": ["api.posthog.com", "app.posthog.com", "eu.posthog.com", "us.posthog.com"]
+    },
+    {
+      "slug": "quickbooks",
+      "name": "QuickBooks",
+      "aliases": ["quick books"],
+      "hosts": ["api.quickbooks.com", "quickbooks.api.intuit.com"]
+    },
+    {
+      "slug": "reddit",
+      "name": "Reddit",
+      "aliases": [],
+      "hosts": ["oauth.reddit.com"]
+    },
+    {
+      "slug": "resend",
+      "name": "Resend",
+      "aliases": ["resend email"],
+      "prompt_match": false,
+      "hosts": ["api.resend.com"]
+    },
+    {
+      "slug": "runflow",
+      "name": "Runflow",
+      "aliases": ["runflow api"],
+      "hosts": ["api.runflow.io"]
+    },
+    {
+      "slug": "salesforce",
+      "name": "Salesforce",
+      "aliases": ["salesforce crm"],
+      "hosts": ["*.my.salesforce.com", "api.salesforce.com"]
+    },
+    {
+      "slug": "sendgrid",
+      "name": "SendGrid",
+      "aliases": ["send grid"],
+      "hosts": ["api.sendgrid.com"]
+    },
+    {
+      "slug": "share_point",
+      "name": "SharePoint",
+      "aliases": ["microsoft sharepoint"],
+      "hosts": ["graph.microsoft.com"]
+    },
+    {
+      "slug": "shopify",
+      "name": "Shopify",
+      "aliases": [],
+      "hosts": ["*.myshopify.com"]
+    },
+    {
+      "slug": "slack",
+      "name": "Slack",
+      "aliases": ["slack workspace"],
+      "prompt_match": false,
+      "hosts": ["slack.com"]
+    },
+    {
+      "slug": "snapchat",
+      "name": "Snapchat",
+      "aliases": ["snap chat"],
+      "hosts": ["api.snapchat.com"]
+    },
+    {
+      "slug": "stripe",
+      "name": "Stripe",
+      "aliases": ["stripe payments"],
+      "prompt_match": false,
+      "hosts": ["api.stripe.com"]
+    },
+    {
+      "slug": "surveymonkey",
+      "name": "SurveyMonkey",
+      "aliases": ["survey monkey"],
+      "hosts": ["api.surveymonkey.com"]
+    },
+    {
+      "slug": "teams",
+      "name": "Microsoft Teams",
+      "aliases": ["ms teams"],
+      "hosts": ["graph.microsoft.com"]
+    },
+    {
+      "slug": "telegram",
+      "name": "Telegram",
+      "aliases": [],
+      "prompt_match": false,
+      "hosts": ["api.telegram.org"]
+    },
+    {
+      "slug": "threads",
+      "name": "Threads",
+      "aliases": ["instagram threads"],
+      "prompt_match": false,
+      "hosts": ["graph.threads.net"]
+    },
+    {
+      "slug": "tiktok",
+      "name": "TikTok",
+      "aliases": ["tik tok"],
+      "hosts": ["api.tiktok.com"]
+    },
+    {
+      "slug": "tiktokads",
+      "name": "TikTok Ads",
+      "aliases": ["tiktok advertising"],
+      "hosts": ["business-api.tiktok.com"]
+    },
+    {
+      "slug": "trello",
+      "name": "Trello",
+      "aliases": [],
+      "hosts": ["api.trello.com"]
+    },
+    {
+      "slug": "twitter",
+      "name": "X (Twitter)",
+      "aliases": ["twitter", "x.com"],
+      "prompt_match": false,
+      "hosts": ["api.twitter.com", "api.x.com"]
+    },
+    {
+      "slug": "typeform",
+      "name": "Typeform",
+      "aliases": ["type form"],
+      "hosts": ["api.typeform.com"]
+    },
+    {
+      "slug": "whatsapp",
+      "name": "WhatsApp",
+      "aliases": ["whats app"],
+      "hosts": ["graph.facebook.com"]
+    },
+    {
+      "slug": "windsor_google_ads",
+      "name": "Google Ads",
+      "aliases": ["google ads campaigns"],
+      "hosts": ["connectors.windsor.ai"]
+    },
+    {
+      "slug": "windsor_openai_ads",
+      "name": "ChatGPT Ads",
+      "aliases": ["chatgpt advertising", "openai ads"],
+      "hosts": ["connectors.windsor.ai"]
+    },
+    {
+      "slug": "wordpress",
+      "name": "WordPress",
+      "aliases": ["word press"],
+      "hosts": ["public-api.wordpress.com"]
+    },
+    {
+      "slug": "youtube",
+      "name": "YouTube",
+      "aliases": ["you tube"],
+      "hosts": ["www.googleapis.com", "youtube.googleapis.com"]
+    },
+    {
+      "slug": "zendesk",
+      "name": "Zendesk",
+      "aliases": ["zen desk"],
+      "hosts": ["*.zendesk.com"]
+    },
+    {
+      "slug": "zoom",
+      "name": "Zoom",
+      "aliases": ["zoom meetings"],
+      "prompt_match": false,
+      "hosts": ["api.zoom.us"]
+    },
+    {
+      "slug": "zoominfo",
+      "name": "ZoomInfo",
+      "aliases": ["zoom info"],
+      "hosts": ["api.zoominfo.com"]
+    }
+  ]
+}

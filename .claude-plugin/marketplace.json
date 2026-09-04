@@ -1,0 +1,23 @@
+{
+  "name": "patricia",
+  "description": "Patricia's own Claude Code plugins, shipped from the monorepo that owns the MCP server they describe.",
+  "owner": {
+    "name": "BetterGroup Holding Inc"
+  },
+  "plugins": [
+    {
+      "name": "patricia",
+      "source": "./",
+      "description": "Use Patricia's workspace memory, files, integrations, and delegated tasks. Five skills cover onboarding, task delegation and approvals, integration management, memory scope, and the default-on memory bridge. Five local hooks onboard projects, recall relevant memory, check integrations first, and propose durable memory pushes without writing to Patricia.",
+      "version": "0.3.0",
+      "tags": [
+        "patricia",
+        "mcp",
+        "memory",
+        "scope",
+        "hook",
+        "consent"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "patricia",
+  "description": "Use Patricia's workspace memory, files, integrations, and delegated tasks. Five skills cover onboarding, task delegation and approvals, integration management, memory scope, and the default-on memory bridge. Five local hooks onboard projects, recall relevant memory, check integrations first, and propose durable memory pushes without writing to Patricia.",
+  "version": "0.3.0",
+  "author": {
+    "name": "BetterGroup Holding Inc"
+  },
+  "repository": "https://github.com/patricia-app/patricia-plugin",
+  "homepage": "https://www.patricia.app/mcp",
+  "license": "MIT",
+  "keywords": [
+    "patricia",
+    "mcp",
+    "memory",
+    "scope",
+    "workspace",
+    "personal",
+    "hook",
+    "post-tool-use",
+    "consent"
+  ]
+}

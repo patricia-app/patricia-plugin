@@ -1,0 +1,47 @@
+{
+  "name": "patricia",
+  "version": "0.3.0",
+  "description": "Patricia connects your AI client to one workspace. Five skills guide onboarding, workspace memory and files, integrations, and delegated work. Five local hooks onboard projects, recall relevant memory, check integrations first, and propose durable memory pushes without writing to Patricia.",
+  "author": {
+    "name": "BetterGroup Holding Inc",
+    "url": "https://www.patricia.app"
+  },
+  "homepage": "https://www.patricia.app/mcp",
+  "repository": "https://github.com/patricia-app/patricia-plugin",
+  "license": "MIT",
+  "keywords": [
+    "patricia",
+    "mcp",
+    "memory",
+    "workspace",
+    "delegation",
+    "integrations"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "Patricia",
+    "shortDescription": "Workspace context and delegated work with Patricia",
+    "longDescription": "Patricia connects your AI client to one workspace. Five skills guide onboarding, workspace memory and files, integrations, and delegated work. Five local hooks onboard projects, recall relevant memory, check integrations first, and propose durable memory pushes without writing to Patricia.",
+    "developerName": "BetterGroup Holding Inc",
+    "category": "Productivity",
+    "capabilities": [
+      "Workspace memory",
+      "Workspace files",
+      "Task delegation",
+      "Connected integrations"
+    ],
+    "websiteURL": "https://www.patricia.app/mcp",
+    "privacyPolicyURL": "https://www.patricia.app/legal/privacy",
+    "termsOfServiceURL": "https://www.patricia.app/legal/terms",
+    "defaultPrompt": [
+      "What context does this Patricia workspace have about our current priorities?",
+      "Find the most relevant workspace memory for this question.",
+      "Ask Patricia to prepare a project update and track the task."
+    ],
+    "brandColor": "#093344",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png"
+  }
+}
