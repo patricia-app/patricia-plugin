@@ -1,7 +1,7 @@
 > [!NOTE]
 > This repository is generated from `bettergroupinc/patricia-monorepo` at `plugins/patricia/`.
 > Automation syncs this public mirror.
-> Source commit: `a9b1726f0cbfed552c396e56a2ff805e11d8e179`.
+> Source commit: `147037702592109a4944cdbfb94bdcabb33f490f`.
 > Open pull requests and issues in the monorepo.
 
 # `patricia` Claude Code plugin
@@ -15,10 +15,9 @@ It carries three things.
 3. **Five local hooks.** They onboard projects, recall memory, check integrations first, and propose
    memory pushes. They never write to Patricia.
 
-This directory is neither of the two "skills" directories the repository already has. It is not
-`backend/api/skill_catalog/`, which is the Patricia product catalogue that reaches customers, and
-it is not `.claude/skills/`, which is contributor tooling for this checkout. It is a distributable
-Claude Code plugin: a person installs it on their own machine, and it never runs inside Patricia.
+This is a distributable Claude Code plugin. A person installs it on their own machine, and it runs
+in that person's Claude Code session. It is not Patricia's product skill catalogue, and nothing in
+it runs inside Patricia.
 
 ## Install
 
@@ -27,9 +26,14 @@ claude plugin marketplace add patricia-app/patricia-plugin
 claude plugin install patricia@patricia
 ```
 
-The plugin is published to https://github.com/patricia-app/patricia-plugin, a generated mirror of this directory; contributors in the monorepo may still add `bettergroupinc/patricia-monorepo` as a marketplace.
-
 Then start a new session, or run `/reload-plugins`.
+
+That marketplace is https://github.com/patricia-app/patricia-plugin. Automation generates every
+file in it from Patricia's monorepo.
+
+Contributor note: the monorepo is private. A contributor with access can add the monorepo itself as
+a marketplace, because its root `.claude-plugin/marketplace.json` points the `patricia` plugin at
+`./plugins/patricia`.
 
 **Install it. Do not load it with `--plugin-dir`.** A directory-loaded plugin gets its skills and
 not its hooks, so the guidance would work and the memory bridge would never fire. That was measured
@@ -137,9 +141,8 @@ in `~/.claude/patricia-plugin.json` to turn only that hook off.
 
 ### Push reminder
 
-- **When and action:** `Stop` runs when the agent finishes. It proposes `remember` or
-  `remember_many` after a local memory write or a substantial tool-using session without a memory
-  write to Patricia.
+- **When and action:** `Stop` runs when the agent finishes. It proposes `remember` after a local
+  memory write or a substantial tool-using session without a memory write to Patricia.
 - **Cost:** It makes no MCP or network call. The hook timeout is 8 seconds.
 - **Off switch:** `hooks.push_reminder.enabled` set to `false`.
 - **Privacy:** It reads at most 5 MB of the local transcript and sends nothing. It only runs when a
@@ -155,13 +158,13 @@ The plugin manifest contains no credential. The client sends the bearer token to
 
 ## Other marketplaces
 
-- Cursor reads `plugin.json` and `mcp.json` from this directory.
+- Cursor reads `plugin.json` and `mcp.json` from this package.
 - OpenAI Codex and ChatGPT read `.codex-plugin/plugin.json`.
 - A remote-source entry needs no manifest. xAI reads `.claude-plugin/plugin.json` when present.
 
-All marketplace packages point at the one `skills/` tree in this directory.
+All marketplace packages point at the one `skills/` tree in this package.
 
-`assets/icon.png` is a copy of `frontend/website/public/patricia-slack-icon-1024.png`, a first-party brand asset.
+`assets/icon.png` is a first-party Patricia brand asset.
 
 ## The memory bridge proposes; it never writes
 
@@ -217,7 +220,28 @@ with none of that.
 
 ## Every tool name here is a real tool
 
-`backend/api/tests/test_patricia_claude_plugin.py` holds every backticked identifier in this
-plugin against `mcp_server.registry.MCP_TOOL_REGISTRY`, which is the list the server builds
-`tools/list` from. It also asserts the extractor found a non-empty set, so a broken extractor
-cannot pass by finding nothing.
+Every backticked tool identifier in this plugin is held against the server's own tool registry,
+the list the server builds `tools/list` from. The same check asserts that it found a non-empty set
+of identifiers, so a broken extractor cannot pass by finding nothing.
+
+Contributor note: that check is `backend/api/tests/test_patricia_claude_plugin.py` in Patricia's
+monorepo, and it runs on every change to this plugin.
+
+## Settings and file discovery
+
+| Tool | Use |
+|---|---|
+| `get_settings` | List settings, or read selected keys or groups with meanings, values, and permissions. Either credential can read workspace groups. |
+| `update_settings` | Change one permitted group through the dashboard operation. A personal token is required. |
+| `list_files` | List files. The first page includes folders and visibility-filtered counts. |
+| `get_brand_kit` | Read brand colors, typography, and logos. |
+
+Use `get_settings(keys=["company_profile"])` for the company profile.
+The settings tools share the catalog and operations Patricia uses in chat.
+Chat settings changes require a click from the requesting person.
+An approval-policy change affects console runs; critical and provider-required actions retain their approval floor, and the audience and click-only floors retain theirs on any action Patricia already asks about.
+
+Integration reads wait while another task runs for the same person.
+Poll that task with `get_task_status`, or wait for it to finish.
+After a direct integration approval, follow the `next` sentence returned by `decide_approval`.
+It names the tool to call again with the same tool_ref and arguments.

@@ -16,13 +16,14 @@ import patricia_client
 MIN_TOOL_CALLS = 12
 MAX_TRANSCRIPT_BYTES = 5 * 1024 * 1024
 WRITE_TOOLS = frozenset({"Write", "Edit", "MultiEdit"})
-MEMORY_TOOLS = frozenset({"remember", "remember_many"})
+MEMORY_TOOLS = frozenset({"remember"})
 
 REMINDER = (
     "Patricia plugin: this session may have produced facts worth keeping for the team. Before you finish, list what "
     "you learned that outlives this session (a decision, a convention, a preference, a fact about a system) and "
-    "offer to save each one with `remember` (or `remember_many` for a batch), passing `scope` as `workspace` for a "
-    "team fact or `personal` for a fact about one person. Ask before saving. Skip this if nothing durable was learned."
+    "offer to save each one with `remember`, in one call for a batch. Pass `scope` as `personal` for the call, and "
+    "set `scope` to `workspace` only on the individual items that are team facts. Ask before saving. Skip this if "
+    "nothing durable was learned."
 )
 
 LOCAL_NOTE_CONTEXT = " You wrote a local memory note this session; Patricia does not have it."

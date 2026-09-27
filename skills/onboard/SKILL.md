@@ -46,7 +46,7 @@ Do not carry a second copy of that rule in this skill. Patricia's server owns th
 ## Offer facts the import cannot reach
 
 Some useful facts can live outside the sources that the returned plan can read. Offer to store those
-facts with `remember`, or use `remember_many` for a batch.
+facts with `remember`, in one call for a batch.
 
 State an explicit `scope` for every fact. Use `workspace` only for a fact that the whole team should
 read. Use `personal` for a fact about one person and whenever the scope is uncertain.

@@ -38,7 +38,7 @@ A structured block has `readable` set to `true` and contains these fields:
 | `tool_label` | The human-readable tool label. |
 | `risk_tier` | The action's risk tier. |
 | `integration` | The integration label, when available. |
-| `args_preview` | The safe argument preview. |
+| `summary` | The plain-language question the approval asks. |
 | `args_digest` | The current argument digest for the decision call. |
 | `expires_at` | The decision deadline. |
 | `where` | The Patricia location for a manual decision. |
@@ -51,7 +51,7 @@ A prose-only block has `readable` set to `false`. It contains only `readable`, `
 
 For a structured block, use this sequence:
 
-1. Show the person `tool_label`, `risk_tier`, `integration`, `args_preview`, and `expires_at`.
+1. Show the person `tool_label`, `risk_tier`, `integration`, `summary`, and `expires_at`.
 2. Show the person each listed option and its `option_notes` entry when present.
 3. Offer exactly the choices in `options`.
 4. Wait for the person to select a choice.
@@ -83,7 +83,6 @@ The decision result contains these fields:
 - `[already_resolved]` means another decision reached the request. Poll the task before another action.
 - `[decision_needs_patricia]` means a critical request can be decided only in Patricia. Send the person to `where`.
 - `[run_actor_not_connection_owner]` means the requester cannot use the action's personal connection.
-- `[approval_needs_dashboard]` means the full arguments are visible only in the Patricia dashboard approval queue.
 - `[approval_context_changed]` means the request changed. Call `get_task_status` and show the new request.
 
 Report the refusal. Do not replace the person's choice or retry a different decision.
