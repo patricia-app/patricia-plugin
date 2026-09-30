@@ -58,7 +58,8 @@ account through her delegated run. Follow the delegating-work skill for task sta
    `[mcp_delegation_in_progress]`, which name the `task_id` to poll, with
    `[mcp_delegation_daily_limit_reached]` until the next UTC day starts, or with
    `[mcp_delegation_admission_in_progress]` when another request for the same person is being
-   admitted. Retry that last one shortly; never retry the others in a loop.
+   admitted. `[mcp_delegation_in_progress]` can also name a task that waits for an approval,
+   and `status` then holds that run's status. Retry `[mcp_delegation_admission_in_progress]` shortly; never retry the others in a loop.
 
 ## Connect an integration
 

@@ -18,9 +18,11 @@ Use `ask_patricia` when Patricia must use a skill, an integration, or workspace 
 3. Call `get_task_status` with that task identifier.
 4. Continue polling while the status is `queued`, `running`, `waiting_approval`, or `suspended`.
 
+When a `queued` status carries `blocked_by`, show its `message` to the person.
+
 Every other status is terminal.
 
-A `status` of `not_started` is terminal. The task did not start. Call `ask_patricia` again with the same request.
+A `status` of `not_started` is terminal. The task did not start. If the result has `answered_by`, another task took the request. Poll the task in `answered_by.task_id` and do not repeat the request. Otherwise call `ask_patricia` again with the same request.
 
 The `answer` field carries Patricia's result. `answer_truncated` means the answer was cut at the
 server's bound. Ask Patricia for the rest or a shorter answer.
