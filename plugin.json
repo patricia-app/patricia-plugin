@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "patricia",
   "description": "Patricia connects your AI client to one workspace. Five skills guide onboarding, workspace memory and files, integrations, and delegated work. Five local hooks onboard projects, recall relevant memory, check integrations first, and propose durable memory pushes without writing to Patricia.",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "author": {
     "name": "BetterGroup Holding Inc",
     "url": "https://www.patricia.app"

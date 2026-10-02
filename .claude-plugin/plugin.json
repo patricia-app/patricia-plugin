@@ -1,7 +1,7 @@
 {
   "name": "patricia",
   "description": "Use Patricia's workspace memory, files, integrations, and delegated tasks. Five skills cover onboarding, task delegation and approvals, integration management, memory scope, and the default-on memory bridge. Five local hooks onboard projects, recall relevant memory, check integrations first, and propose durable memory pushes without writing to Patricia.",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "author": {
     "name": "BetterGroup Holding Inc"
   },

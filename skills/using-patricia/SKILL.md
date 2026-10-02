@@ -182,7 +182,18 @@ the token's conversation continues. Use `list_integration_tools`, then `read_int
 `use_integration_tool`, when you
 need one exact connected action.
 
-- When `get_task_status` reports `waiting_approval`, read its `approval` block. The block uses
+- Call `get_task_status` without `task_id` to list the pending approvals this person may read. The
+  list is not a census of approval work: an approved direct call that waits for its retry is not
+  listed. A per-fire card for a scheduled write can stay pending while its task runs or after it
+  ended. A true `review_available` routes to a review call with `task_id` and `permission_request_id`.
+  If `approval.review` is absent, use the answer's current `options`, `option_notes`, and `where`.
+  Otherwise show the full arguments before the person chooses, and pass the `document_id` as
+  `expected_document_id` for each later slice. Retry `[task_status_unavailable]` and
+  `[approval_review_busy]` shortly. An `accepted` decision is queued, not settled; the
+  delegating-work skill covers a per-fire card that stays pending after it. A pending per-fire card
+  can still be denied after its deadline, until Patricia expires it.
+- When `get_task_status` reports `waiting_approval`, or an `approval` block on another status, read
+  that `approval` block. The block uses
   `readable` set to `true` for the structured shape and `false` for the prose-only fallback. When it
   is readable, show the person its `tool_label`, `risk_tier`, and `summary`. Before you ask,
   show the person each listed option
@@ -199,7 +210,8 @@ need one exact connected action.
   grant. A run grant is bounded by this pre-read plus the runtime gate that re-runs the floor and
   allowlist on every call. An unavailable grant pre-read removes grant options but does not remove
   the approve or deny options. An approval still covers the current call once. A critical action is decided
-  only in Patricia. After a direct integration approval, follow the result's `next` sentence.
+  only in Patricia. A task-permission offer is decided only in the Patricia dashboard approval queue or the conversation.
+  After a direct integration approval, follow the result's `next` sentence.
   Call the named tool again with the same tool_ref and arguments to run it.
 
 The delegating-work skill covers task status and approvals; the integrations skill covers connect,
