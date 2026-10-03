@@ -141,6 +141,7 @@ Never change the person's choice.
 - `[decision_needs_patricia]` means a critical request, or a per-fire write whose complete arguments
   cannot be shown here, can be decided only in Patricia. Send the person to `where`.
   A task-permission offer is decided only in the Patricia dashboard approval queue or the conversation.
+  A click-only card is approved only on its card or in the dashboard; you can deny it here.
 - `[run_actor_not_connection_owner]` means the requester cannot use the action's personal connection.
 - `[approval_context_changed]` means the request changed. Call `get_task_status` and show the new request.
 - `[approval_review_busy]` means the check before a per-fire approval is busy. Nothing was decided.
