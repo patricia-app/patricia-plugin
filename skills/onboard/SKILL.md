@@ -52,6 +52,6 @@ State an explicit `scope` for every fact. Use `workspace` only for a fact that t
 read. Use `personal` for a fact about one person and whenever the scope is uncertain.
 
 Tell the person what you propose to store and which scope you will use. Wait for their answer before
-you call either memory tool. Save nothing when they decline.
+you call `remember`. Save nothing when they decline.
 
 Read the using-patricia skill when you need the complete memory-scope rules.

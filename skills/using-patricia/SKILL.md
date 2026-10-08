@@ -30,11 +30,12 @@ type. Two credentials reach this server and they are not interchangeable.
 | `pat_mcp_` personal token | yes | yes | yes, the holder's own |
 | `pat_live_` tenant API key | no | no | no |
 
-A tenant key answers for a workspace, so it cannot run `list_skills`, `list_custom_skills`,
-`read_custom_skill_file`, `push_custom_skill`, `list_integrations`, `list_integration_tools`,
-`read_integration_data` or `use_integration_tool`: all of them answer for the person holding the
-credential. Read a refusal
-literally. It usually names the credential, not the tool.
+A tenant key answers for a workspace and names no person. It cannot write or run tools whose
+answers depend on the person holding the credential: `list_skills`, `list_custom_skills`,
+`read_custom_skill_file`, `list_integrations`, `list_integration_tools`, `read_integration_data`,
+`use_integration_tool`, `get_task_status`, `list_files`, `read_file`, `search_files`, `list_memories`,
+`list_scheduled_tasks`, and `start_onboarding_import`. Read a refusal literally. It usually names
+the credential, not the tool.
 
 ## Give the local hooks a personal token
 
