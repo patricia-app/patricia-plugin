@@ -1,7 +1,7 @@
 > [!NOTE]
 > This repository is generated from `bettergroupinc/patricia-monorepo` at `plugins/patricia/`.
 > Automation syncs this public mirror.
-> Source commit: `c857a7ef97ba2216dcce72ae04d11023ac450adb`.
+> Source commit: `1e23babf44eef2fa03991ff12d95f963e1a4bff5`.
 > Open pull requests and issues in the monorepo.
 
 # `patricia` Claude Code plugin
@@ -93,6 +93,66 @@ Or write this file at `~/.claude/patricia.json`:
 
 `PATRICIA_MCP_TOKEN` wins over the file. An empty `PATRICIA_MCP_TOKEN` disables the file fallback.
 This behavior is deliberate. It lets a person suspend authenticated hooks without moving the file.
+
+## Transfer workspace files
+
+The server exposes 36 tools. File transfers use modes on `create_file`, `update_file`, and `read_file`.
+
+- Send `content` or `content_base64` for an inline write.
+- Declare `sha256`, `byte_size`, and `content_type` for a direct upload.
+- Complete the upload with its single-use `upload_id`.
+- Read `read_file(as_download_url=true)` for metadata and a temporary signed GET URL.
+
+A create declaration also needs `name` and `kind`. An update declaration needs `file_id`.
+
+Save the declaration result JSON as `declaration.json` beside `file.pdf`.
+Use Bash, jq, and curl to send every returned `upload_headers` entry.
+The signature binds `byte_size`: send exactly that many bytes with Content-Length; chunked transfer fails.
+
+```bash
+declaration=declaration.json
+file=file.pdf
+mode=$(jq -er '
+  if (.upload_id | type == "string" and length > 0) and has("upload_url") then
+    if .upload_url == null and .already_stored == true then "reuse"
+    elif (.upload_url | type == "string" and length > 0) and .already_stored == false
+      and (.upload_headers | type == "object" and all(.[]; type == "string")) then "put"
+    else error("Invalid upload declaration") end
+  else error("Invalid upload declaration") end
+' "$declaration") || { printf 'Invalid upload declaration.\n' >&2; exit 1; }
+upload_id=$(jq -r '.upload_id' "$declaration") || exit 1
+if [[ "$mode" == put ]]; then
+  upload_url=$(jq -r '.upload_url' "$declaration") || exit 1
+  headers=()
+  while IFS= read -r header; do
+    headers+=(--header "$header")
+  done < <(jq -r '.upload_headers | to_entries[] | "\(.key): \(.value)"' "$declaration")
+  status=$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' \
+    --request PUT "$upload_url" "${headers[@]}" --data-binary "@$file") || exit 1
+  case "$status" in
+    2??|412) ;;
+    *) printf 'Upload refused: HTTP %s\n' "$status" >&2; exit 1 ;;
+  esac
+fi
+# A null upload_url skips the PUT and goes straight to completion.
+printf 'Complete with upload_id %s before its expiry.\n' "$upload_id"
+```
+
+412 means bytes already landed at this key. Call complete with upload_id before its expiry.
+After 412, `[invalid_arguments]` at completion is terminal: send the content inline or ask the owner to share; do not redeclare.
+
+The checksum is the base64 encoding of the SHA-256 digest's raw bytes.
+A null upload URL means Patricia can reuse bytes through a live file this person can read.
+Completion checks that access again and confirms the stored bytes.
+Complete creates with `upload_id` alone. Complete updates with `file_id` and `upload_id`.
+Keep inline fields, declarations, and completion fields separate.
+
+Completion returns `id`, `version`, `byte_size`, `sha256`, and an available `console_url`.
+Create completion also returns `sharing_note`.
+Download mode returns `id`, `version`, `byte_size`, `sha256`, `content_type`, `download_url`, and expiry fields.
+Use the signed GET URL to download bytes outside the conversation.
+The download response contains zero text or base64 content fields.
+Legacy database content returns `[download_unavailable]`; ordinary text reads remain available.
 
 ## Local hooks
 

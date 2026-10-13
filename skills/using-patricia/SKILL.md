@@ -223,6 +223,71 @@ use, and disconnect.
 `publish_publicly` as a required argument with no default, because the caller has to name the act.
 `unshare_file` closes a link by the `link_id` that `share_file` returned.
 
+## Transfer file bytes outside the conversation
+
+The MCP surface contains 36 tools. Use the existing file tools for each transfer mode.
+
+1. Send `content` or `content_base64` for an inline write.
+2. Declare `sha256`, `byte_size`, and `content_type` for a direct upload.
+3. Complete the upload with its single-use `upload_id`.
+
+Create declarations need `name` and `kind`. Update declarations need `file_id`.
+Compute the lowercase SHA-256 and byte size locally.
+Keep file bytes outside the MCP request during direct transfers.
+Keep declaration, inline, and completion fields separate.
+
+Save the declaration result JSON as `declaration.json` beside `file.pdf`.
+Use Bash, jq, and curl to send every returned `upload_headers` entry.
+The signature binds `byte_size`: send exactly that many bytes with Content-Length; chunked transfer fails.
+
+```bash
+declaration=declaration.json
+file=file.pdf
+mode=$(jq -er '
+  if (.upload_id | type == "string" and length > 0) and has("upload_url") then
+    if .upload_url == null and .already_stored == true then "reuse"
+    elif (.upload_url | type == "string" and length > 0) and .already_stored == false
+      and (.upload_headers | type == "object" and all(.[]; type == "string")) then "put"
+    else error("Invalid upload declaration") end
+  else error("Invalid upload declaration") end
+' "$declaration") || { printf 'Invalid upload declaration.\n' >&2; exit 1; }
+upload_id=$(jq -r '.upload_id' "$declaration") || exit 1
+if [[ "$mode" == put ]]; then
+  upload_url=$(jq -r '.upload_url' "$declaration") || exit 1
+  headers=()
+  while IFS= read -r header; do
+    headers+=(--header "$header")
+  done < <(jq -r '.upload_headers | to_entries[] | "\(.key): \(.value)"' "$declaration")
+  status=$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' \
+    --request PUT "$upload_url" "${headers[@]}" --data-binary "@$file") || exit 1
+  case "$status" in
+    2??|412) ;;
+    *) printf 'Upload refused: HTTP %s\n' "$status" >&2; exit 1 ;;
+  esac
+fi
+# A null upload_url skips the PUT and goes straight to completion.
+printf 'Complete with upload_id %s before its expiry.\n' "$upload_id"
+```
+
+412 means bytes already landed at this key. Call complete with upload_id before its expiry.
+After 412, `[invalid_arguments]` at completion is terminal: send the content inline or ask the owner to share; do not redeclare.
+
+The checksum header contains base64 of the raw declared SHA-256 digest.
+Complete creates with only `upload_id`. Complete updates with `file_id` and `upload_id`.
+Completion returns `id`, `version`, `byte_size`, `sha256`, and an available `console_url`.
+Create completion also returns `sharing_note`.
+A null `upload_url` means this person can reuse a live file's readable bytes.
+Completion checks that readable reference again. A digest alone grants zero access to private content.
+
+Call `read_file(file_id=..., version=..., as_download_url=true)` for a metadata-only download result.
+Omit `version` for the current version.
+The result contains `id`, `version`, `byte_size`, `sha256`, `content_type`, `download_url`, and expiry fields.
+Download the signed GET URL outside the conversation.
+The result contains zero text or base64 content fields.
+Treat the URL as a temporary bearer credential.
+Request a fresh URL when its expiry passes.
+Use an ordinary text read or the dashboard when `[download_unavailable]` names legacy database content.
+
 ## Change and remove files
 
 `update_file` changes one file in one call: pass `content` for a new version, `name` to rename it,
