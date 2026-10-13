@@ -138,8 +138,8 @@ Never change the person's choice.
 - `[not_your_decision]` means this connection cannot decide the request. Send the person to `where`.
 - `[approval_expired]` means the request expired. Ask Patricia again to restart the work.
 - `[already_resolved]` means another decision reached the request. Poll the task before another action.
-- `[decision_needs_patricia]` means a critical request, or a per-fire write whose complete arguments
-  cannot be shown here, can be decided only in Patricia. Send the person to `where`.
+- `[decision_needs_patricia]` means a per-fire write whose complete arguments cannot be shown here
+  can be approved only in Patricia. You can still deny it here. Send the person to `where`.
   A task-permission offer is decided only in the Patricia dashboard approval queue or the conversation.
   A click-only card is approved only on its card or in the dashboard; you can deny it here.
 - `[run_actor_not_connection_owner]` means the requester cannot use the action's personal connection.

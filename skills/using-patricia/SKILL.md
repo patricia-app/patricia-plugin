@@ -210,8 +210,7 @@ need one exact connected action.
   provisional pre-read, never a receipt. The worker re-checks eligibility for a durable (tool)
   grant. A run grant is bounded by this pre-read plus the runtime gate that re-runs the floor and
   allowlist on every call. An unavailable grant pre-read removes grant options but does not remove
-  the approve or deny options. An approval still covers the current call once. A critical action is decided
-  only in Patricia. A task-permission offer is decided only in the Patricia dashboard approval queue or the conversation.
+  the approve or deny options. An approval still covers the current call once. A task-permission offer is decided only in the Patricia dashboard approval queue or the conversation.
   After a direct integration approval, follow the result's `next` sentence.
   Call the named tool again with the same tool_ref and arguments to run it.
 
