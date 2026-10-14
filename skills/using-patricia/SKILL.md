@@ -293,7 +293,8 @@ Use an ordinary text read or the dashboard when `[download_unavailable]` names l
 `update_file` changes one file in one call: pass `content` for a new version, `name` to rename it,
 or `folder_id` to move it into a folder. Older versions stay readable through `read_file`. A move
 into a shared folder is refused with `folder_is_public` and nothing moves, because that move would
-publish the file. `share_file` is the one tool that publishes.
+publish the file. `share_file` is the one tool that raises a file's visibility on its own;
+`create_file` into a shared folder and `update_file` on a published file reach that existing audience at once.
 
 `delete_file` moves one file to the trash. It needs a non-blank `reason`, which lands on the audit
 record, and it closes every open public link to the file for good. Only an owner or an admin holds
