@@ -39,7 +39,7 @@ the credential, not the tool.
 
 ## Give the local hooks a personal token
 
-Create a `pat_mcp_` personal key in Patricia under Settings > Developer > Personal keys. Then use
+Create a `pat_mcp_` personal key in Patricia under Settings > AI tools > Advanced > API keys. Then use
 one of these local settings:
 
 - Export `PATRICIA_MCP_TOKEN=pat_mcp_...` in the environment that starts Claude Code.

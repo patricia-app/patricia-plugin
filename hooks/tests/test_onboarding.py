@@ -65,7 +65,10 @@ class OnboardingTests(HookTestCase):
         self.assertEqual(self.context(payload), onboarding.NO_TOKEN_CONTEXT)
         self.assertIsNone(self.context(payload))
 
-        self.assertIn("app.patricia.app", onboarding.NO_TOKEN_CONTEXT)
+        self.assertIn("console.patricia.app", onboarding.NO_TOKEN_CONTEXT)
+        self.assertIn("Settings > AI tools > Advanced > API keys", onboarding.NO_TOKEN_CONTEXT)
+        self.assertNotIn("app.patricia.app", onboarding.NO_TOKEN_CONTEXT)
+        self.assertNotIn("Developer", onboarding.NO_TOKEN_CONTEXT)
         self.assertIn("PATRICIA_MCP_TOKEN=pat_mcp_...", onboarding.NO_TOKEN_CONTEXT)
         self.assertIn('{"token": "pat_mcp_..."}', onboarding.NO_TOKEN_CONTEXT)
         self.assertIn("~/.claude/patricia.json", onboarding.NO_TOKEN_CONTEXT)

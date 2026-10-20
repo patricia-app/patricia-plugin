@@ -1,7 +1,7 @@
 > [!NOTE]
 > This repository is generated from `bettergroupinc/patricia-monorepo` at `plugins/patricia/`.
 > Automation syncs this public mirror.
-> Source commit: `bd00a60f081f0295b111b9bf63bd80338102d1e0`.
+> Source commit: `7c721ccbdd479ffa1532982a97f426fff730f2d5`.
 > Open pull requests and issues in the monorepo.
 
 # `patricia` Claude Code plugin
@@ -76,7 +76,7 @@ key names nobody, so it reads only, and it cannot answer `list_skills` or `list_
 
 Python 3 must be available through the python3 command for the local hooks.
 
-Create a `pat_mcp_` personal key in Patricia under Settings > Developer > Personal keys. Then
+Create a `pat_mcp_` personal key in Patricia under Settings > AI tools > Advanced > API keys. Then
 choose one setup:
 
 ```bash

@@ -36,8 +36,8 @@ IDENTITY_DATA_NOTICE = (
 
 NO_TOKEN_CONTEXT = (
     "Patricia plugin: no personal token is configured, so Patricia's memory and integrations are not checked "
-    "automatically. Create a `pat_mcp_` personal key at app.patricia.app under Settings > Developer > Personal "
-    'keys. Then export `PATRICIA_MCP_TOKEN=pat_mcp_...`, or write {"token": "pat_mcp_..."} to '
+    "automatically. Create a `pat_mcp_` personal key at console.patricia.app under Settings > AI tools > "
+    'Advanced > API keys. Then export `PATRICIA_MCP_TOKEN=pat_mcp_...`, or write {"token": "pat_mcp_..."} to '
     "`~/.claude/patricia.json`. Use the onboard skill after the token is ready. Set "
     "`hooks.onboarding.enabled` to `false` in `~/.claude/patricia-plugin.json` to turn off this hook."
 )
