@@ -108,7 +108,8 @@ returns `prompt_for_your_own_memory`, a ready-made prompt for exactly this case.
   `read_integration_data` takes only a `read_only` `tool_ref` and changes nothing.
   `use_integration_tool` takes only a ref that can change data. Both run the action at once and
   answer with `tool_result`, or with an `approval` block when Patricia's approval rules gate the
-  call; after the person decides, the same call again runs it.
+  call. After approval, poll `get_task_status` with its task id for the result.
+  Do not call the tool again; Patricia runs the approved action once. A call after it finishes is a new request; current approval rules decide whether it asks first. Follow the `next` instruction: Billit saved reviews and approvals without stored requester identity can require the same call again.
 - `disconnect_integration` disconnects one connected integration. Pass the `account_id` that
   `list_integrations` returns. It needs `confirm_disconnect` set to `true` because it is destructive.
   A person can disconnect their own personal account. An owner or an admin can disconnect any
@@ -194,8 +195,7 @@ the token's conversation continues. Use `list_integration_tools`, then `read_int
 need one exact connected action.
 
 - Call `get_task_status` without `task_id` to list the pending approvals this person may read. The
-  list is not a census of approval work: an approved direct call that waits for its retry is not
-  listed. A per-fire card for a scheduled write can stay pending while its task runs or after it
+  list contains pending cards. Approved direct calls run through the worker and leave this list. A per-fire card for a scheduled write can stay pending while its task runs or after it
   ended. A true `review_available` routes to a review call with `task_id` and `permission_request_id`.
   If `approval.review` is absent, use the answer's current `options`, `option_notes`, and `where`.
   Otherwise show the full arguments before the person chooses, and pass the `document_id` as
@@ -222,7 +222,8 @@ need one exact connected action.
   allowlist on every call. An unavailable grant pre-read removes grant options but does not remove
   the approve or deny options. An approval still covers the current call once. A task-permission offer is decided only in the Patricia dashboard approval queue or the conversation.
   After a direct integration approval, follow the result's `next` sentence.
-  Call the named tool again with the same tool_ref and arguments to run it.
+  Poll `get_task_status` with the task id for the result. Do not call the tool again; Patricia runs the approved action once. A call after it finishes is a new request; current approval rules decide whether it asks first.
+  Follow the `next` instruction: Billit saved reviews and approvals without stored requester identity can require the same call again.
 
 The delegating-work skill covers task status and approvals; the integrations skill covers connect,
 use, and disconnect.

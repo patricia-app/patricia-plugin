@@ -1,7 +1,7 @@
 > [!NOTE]
 > This repository is generated from `bettergroupinc/patricia-monorepo` at `plugins/patricia/`.
 > Automation syncs this public mirror.
-> Source commit: `06adacb7fb20bc9447d1cc9d6e1c17b7789e77e6`.
+> Source commit: `f8d2d78e96de47edd29fa5eb228bc98dcaefea56`.
 > Open pull requests and issues in the monorepo.
 
 # `patricia` Claude Code plugin
@@ -304,4 +304,5 @@ An approval-policy change affects console runs; critical and provider-required a
 Integration reads wait while another task runs for the same person.
 Poll that task with `get_task_status`, or wait for it to finish.
 After a direct integration approval, follow the `next` sentence returned by `decide_approval`.
-It names the tool to call again with the same tool_ref and arguments.
+Poll `get_task_status` with the task id for the result. Do not call the tool again; Patricia runs the approved action once. A call after it finishes is a new request; current approval rules decide whether it asks first.
+Follow the `next` instruction: Billit saved reviews and approvals without stored requester identity can require the same call again.

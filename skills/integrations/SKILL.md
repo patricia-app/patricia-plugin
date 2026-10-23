@@ -31,7 +31,7 @@ account through her delegated run. Follow the delegating-work skill for task sta
    validated arguments: `read_integration_data` for a `read_only` result, `use_integration_tool`
    for any other. Each refuses the other's refs, with `[write_tool_ref]` or
    `[read_only_tool_ref]` naming the one to call instead.
-5. Read the answer. The call runs at once, with no Patricia run to poll. Its `status` is `completed`
+5. Read the answer. An ungated call runs at once. Its `status` is `completed`
    with a `tool_result`, or `waiting_approval` with an `approval` block.
 6. Read `tool_result` for the tool outcome.
    A `completed` answer always has this field. Read its status, reason, output, and error fields
@@ -48,8 +48,8 @@ account through her delegated run. Follow the delegating-work skill for task sta
 7. When the answer is `waiting_approval`, show the person the `approval` block and follow the
    delegating-work skill to decide it with `decide_approval`, or let the person decide it in Patricia.
    Read the `next` sentence returned by `decide_approval`.
-   Call the named tool again with the same `tool_ref` and `arguments`. That call runs the action
-   and returns its `tool_result`. `get_task_status` with the `task_id` reports the decision state.
+   Poll `get_task_status` with the `task_id` for the result. Do not call the tool again; Patricia runs the approved action once. A call after it finishes is a new request; current approval rules decide whether it asks first.
+   Follow the `next` instruction: Billit saved reviews and approvals without stored requester identity can require the same call again.
    `read_integration_data`, `use_integration_tool` and `ask_patricia` share the same single-flight
    and daily run limits. A read also waits while another task runs for this person.
    The in-progress sentence is: "Another task for this person is already running as task <id>.
