@@ -12,6 +12,7 @@ description: >-
   disconnect_integration, list_scheduled_tasks, cancel_scheduled_task, scheduled task, reminder,
   get_meeting_recordings, meeting, recording, transcript,
   disconnect_integration, share_integration, unshare_integration, share_with_team,
+  switch_on_skill, switch_off_skill, confirm_switch_on,
   start_onboarding_import, whoami, get_settings, update_settings, pat_mcp, pat_live.
 ---
 
@@ -124,6 +125,14 @@ returns `prompt_for_your_own_memory`, a ready-made prompt for exactly this case.
   credential. `unshare_integration` makes a shared account private to the person who connected it
   and deletes every other member's auto-run consent on it; the result's `consents_removed` says how
   many. Both return `changed`, which is `false` when the account was already at that visibility.
+- `switch_on_skill` turns on a skill that is installed but switched off. Pass its slug or exact title.
+  It needs `confirm_switch_on` set to `true`, and the same owner or admin access as the Skills page.
+  It does not install a skill, and a skill stopped with its emergency switch stays stopped. The result's
+  `changed` is `false` when the skill was already on.
+- `switch_off_skill` turns one skill off. Pass its slug or exact title. It needs the same owner or admin
+  access and has no confirmation argument, because it only narrows what Patricia does. A skill that runs
+  for everyone by default is turned off for the whole workspace. The result's `changed` is `false` when
+  the skill was already off.
 - `push_custom_skill` sends a local skill folder back: pass the folder name and the whole `SKILL.md`
   text, and the frontmatter supplies the rest, so there is no manifest to write. Pass the
   `expected_version_id` from your last read to update safely. If somebody published since, the push
@@ -236,7 +245,7 @@ use, and disconnect.
 
 ## Transfer file bytes outside the conversation
 
-The MCP surface contains 37 tools. Use the existing file tools for each transfer mode.
+The MCP surface contains 39 tools. Use the existing file tools for each transfer mode.
 
 1. Send `content` or `content_base64` for an inline write.
 2. Declare `sha256`, `byte_size`, and `content_type` for a direct upload.

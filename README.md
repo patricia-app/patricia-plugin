@@ -1,7 +1,7 @@
 > [!NOTE]
 > This repository is generated from `bettergroupinc/patricia-monorepo` at `plugins/patricia/`.
 > Automation syncs this public mirror.
-> Source commit: `f8d2d78e96de47edd29fa5eb228bc98dcaefea56`.
+> Source commit: `27d707fea13ac870b6ad80a88aa04659e6903ea1`.
 > Open pull requests and issues in the monorepo.
 
 # `patricia` Claude Code plugin
@@ -96,7 +96,7 @@ This behavior is deliberate. It lets a person suspend authenticated hooks withou
 
 ## Transfer workspace files
 
-The server exposes 37 tools. File transfers use modes on `create_file`, `update_file`, and `read_file`.
+The server exposes 39 tools. File transfers use modes on `create_file`, `update_file`, and `read_file`.
 
 - Send `content` or `content_base64` for an inline write.
 - Declare `sha256`, `byte_size`, and `content_type` for a direct upload.
