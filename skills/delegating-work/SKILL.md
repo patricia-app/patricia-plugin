@@ -60,8 +60,9 @@ A structured block has `readable` set to `true` and contains these fields:
 | `expires_at` | The decision deadline. |
 | `where` | The Patricia location for a manual decision. |
 | `options` | The decisions this connection may offer. |
-| `option_notes` | The reasons that other decisions are unavailable. |
-| `approval_kind` | `per_fire` for a scheduled write, `ordinary` for any other card. |
+| `option_notes` | Notes on listed decisions, and the reasons that other decisions are unavailable. |
+| `approval_kind` | `per_fire` for a scheduled write, `approval_kind="task_offer"` for pre-approval of task steps, or `ordinary`. |
+| `approval.task_offer_manifest` | The offer's display purpose, deliverables, forecast, summary and lines, when disclosure is authorized. |
 | `review_available` | `true` routes to the explicit review call; it does not promise a complete document. |
 | `review_coordinates` | The `task_id`, `permission_request_id`, and `action_id` of that review. |
 
@@ -83,10 +84,21 @@ Do not add, remove, rename, or select an approval choice. Never decide on the pe
 
 `options` can be empty. Send the person to `where` when it is empty.
 
+For ordinary approvals:
+
 - `approve` approves the current call.
 - `deny` rejects the current call.
 - `approve_run` approves once and requests a grant for eligible calls during this run.
 - `approve_tool_always` approves once and requests a durable grant for this tool.
+
+For `approval_kind="task_offer"`, show the returned `approval.task_offer_manifest` purpose, deliverables and lines
+when present. Show the exclusions and listed options before asking the person.
+Only the verified requester decides. `approve` approves eligible steps, excluding nonselectable and
+recipient-pinned lines. Choose recipient-pinned lines in the dashboard or chat.
+`deny` declines pre-approval and continues under the normal approval rules; it does not stop the task.
+A requester without execution scope can withdraw with the full digest but receives no manifest values.
+Explain that value-free choice without inventing offer details. Neither grant choice is available for offers.
+The per-fire resend policy below does not apply to offers.
 
 The decision result contains these fields:
 
@@ -140,8 +152,8 @@ Never change the person's choice.
 - `[already_resolved]` means another decision reached the request. Poll the task before another action.
 - `[decision_needs_patricia]` means a per-fire write whose complete arguments cannot be shown here
   can be approved only in Patricia. You can still deny it here. Send the person to `where`.
-  A task-permission offer is decided only in the Patricia dashboard approval queue or the conversation.
-  A click-only card is approved only on its card or in the dashboard; you can deny it here.
+  Offers refuse grant choices rather than approving once. Other click-only cards need their card or
+  dashboard for approval; you can deny them here.
 - `[run_actor_not_connection_owner]` means the requester cannot use the action's personal connection.
 - `[approval_context_changed]` means the request changed. Call `get_task_status` and show the new request.
 - `[approval_review_busy]` means the check before a per-fire approval is busy. Nothing was decided.

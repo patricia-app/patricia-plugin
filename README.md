@@ -1,7 +1,7 @@
 > [!NOTE]
 > This repository is generated from `bettergroupinc/patricia-monorepo` at `plugins/patricia/`.
 > Automation syncs this public mirror.
-> Source commit: `27d707fea13ac870b6ad80a88aa04659e6903ea1`.
+> Source commit: `9f4236bb359ebf797df644521c2ab22abd180154`.
 > Open pull requests and issues in the monorepo.
 
 # `patricia` Claude Code plugin

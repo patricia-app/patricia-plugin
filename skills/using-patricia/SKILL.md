@@ -229,7 +229,14 @@ need one exact connected action.
   provisional pre-read, never a receipt. The worker re-checks eligibility for a durable (tool)
   grant. A run grant is bounded by this pre-read plus the runtime gate that re-runs the floor and
   allowlist on every call. An unavailable grant pre-read removes grant options but does not remove
-  the approve or deny options. An approval still covers the current call once. A task-permission offer is decided only in the Patricia dashboard approval queue or the conversation.
+  the approve or deny options. An ordinary approval still covers the current call once.
+  For `approval_kind="task_offer"`, show the returned `approval.task_offer_manifest` purpose, deliverables and lines
+  when present. Show the exclusions and listed options before asking the person.
+  Only the verified requester decides. `approve` approves eligible steps, excluding nonselectable and
+  recipient-pinned lines. Choose recipient-pinned lines in the dashboard or chat.
+  `deny` declines pre-approval and continues under the normal approval rules; it does not stop the task.
+  A requester without execution scope can withdraw with the full digest but receives no manifest values.
+  Explain that value-free choice without inventing offer details. Neither grant choice is available for offers.
   After a direct integration approval, follow the result's `next` sentence.
   Poll `get_task_status` with the task id for the result. Do not call the tool again; Patricia runs the approved action once. A call after it finishes is a new request; current approval rules decide whether it asks first.
   Follow the `next` instruction: Billit saved reviews and approvals without stored requester identity can require the same call again.
