@@ -302,7 +302,7 @@ After 412, `[invalid_arguments]` at completion is terminal: send the content inl
 The checksum header contains base64 of the raw declared SHA-256 digest.
 Complete creates with only `upload_id`. Complete updates with `file_id` and `upload_id`.
 Completion returns `id`, `version`, `byte_size`, `sha256`, and an available `console_url`.
-Create completion also returns `sharing_note`.
+Create completion also returns `visibility` and `sharing_note`.
 A null `upload_url` means this person can reuse a live file's readable bytes.
 Completion checks that readable reference again. A digest alone grants zero access to private content.
 
@@ -318,9 +318,12 @@ Use an ordinary text read or the dashboard when `[download_unavailable]` names l
 ## Change and remove files
 
 `update_file` changes one file in one call: pass `content` for a new version, `name` to rename it,
-or `folder_id` to move it into a folder. Older versions stay readable through `read_file`. A move
+`folder_id` to move it into a folder, or `only_me` to change its level.
+True selects Only me; false selects My team. Only the author or a workspace admin can change the level.
+Only me closes existing file links; a shared folder's link still opens the file.
+Older versions stay readable through `read_file`. A move
 into a shared folder is refused with `folder_is_public` and nothing moves, because that move would
-publish the file. `share_file` is the one tool that raises a file's visibility on its own;
+publish the file. `share_file` publishes a file for anyone holding its link;
 `create_file` into a shared folder and `update_file` on a published file reach that existing audience at once.
 
 `delete_file` moves one file to the trash. It needs a non-blank `reason`, which lands on the audit
