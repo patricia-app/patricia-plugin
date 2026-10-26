@@ -9,7 +9,7 @@ description: >-
   workspace memory, personal memory, memory scope, create_file, update_file, delete_file,
   create_folder, share_file, publish_publicly, list_skills,
   list_integrations, list_integration_tools, read_integration_data, use_integration_tool,
-  disconnect_integration, list_scheduled_tasks, cancel_scheduled_task, scheduled task, reminder,
+  disconnect_integration, list_scheduled_tasks, cancel_scheduled_task, cancel_task, scheduled task, reminder,
   get_meeting_recordings, meeting, recording, transcript,
   disconnect_integration, share_integration, unshare_integration, share_with_team,
   switch_on_skill, switch_off_skill, confirm_switch_on,
@@ -198,8 +198,9 @@ A settings change through Patricia chat needs a click from the requesting person
 ## Hand real work over
 
 `ask_patricia` gives Patricia a free-form task and returns a task id. Poll it with
-`get_task_status`. When `answer` is a question, call `ask_patricia` again with the reply;
-the token's conversation continues. Use `list_integration_tools`, then `read_integration_data` or
+`get_task_status`. To stop it, call `cancel_task` with the task id, then poll `get_task_status`
+until the task ends. A cancel never undoes an action that already ran. When `answer`
+is a question, call `ask_patricia` again with the reply; the token's conversation continues. Use `list_integration_tools`, then `read_integration_data` or
 `use_integration_tool`, when you
 need one exact connected action.
 
@@ -252,7 +253,7 @@ use, and disconnect.
 
 ## Transfer file bytes outside the conversation
 
-The MCP surface contains 39 tools. Use the existing file tools for each transfer mode.
+The MCP surface contains 40 tools. Use the existing file tools for each transfer mode.
 
 1. Send `content` or `content_base64` for an inline write.
 2. Declare `sha256`, `byte_size`, and `content_type` for a direct upload.
