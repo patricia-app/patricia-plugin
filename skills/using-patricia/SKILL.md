@@ -126,11 +126,11 @@ returns `prompt_for_your_own_memory`, a ready-made prompt for exactly this case.
   and deletes every other member's auto-run consent on it; the result's `consents_removed` says how
   many. Both return `changed`, which is `false` when the account was already at that visibility.
 - `switch_on_skill` turns on a skill that is installed but switched off. Pass its slug or exact title.
-  It needs `confirm_switch_on` set to `true`, and the same owner or admin access as the Skills page.
-  It does not install a skill, and a skill stopped with its emergency switch stays stopped. The result's
-  `changed` is `false` when the skill was already on.
-- `switch_off_skill` turns one skill off. Pass its slug or exact title. It needs the same owner or admin
-  access and has no confirmation argument, because it only narrows what Patricia does. A skill that runs
+  It needs `confirm_switch_on` set to `true`. An owner or admin can switch any skill, and the person who
+  owns an Only me skill can switch that one. It does not install a skill, and a skill stopped with its
+  emergency switch stays stopped. The result's `changed` is `false` when the skill was already on.
+- `switch_off_skill` turns one skill off. Pass its slug or exact title. The same rule applies. It has no
+  confirmation argument, because it only narrows what Patricia does. A skill that runs
   for everyone by default is turned off for the whole workspace. The result's `changed` is `false` when
   the skill was already off.
 - `push_custom_skill` sends a local skill folder back: pass the folder name and the whole `SKILL.md`
