@@ -222,7 +222,9 @@ need one exact connected action.
   answer. Never choose an option for them. An option absent from `options` is not offered to the
   person; `option_notes` says why. `approve_run` is an approve-once action that also requests a grant
   for eligible calls during this run. `approve_tool_always` is an approve-once action that also
-  requests a durable grant for this tool. Call `decide_approval` with their option and the block's
+  requests a durable grant for this tool. Cost cards offer their requester `approve_integration_always`:
+  show `cost_disclosure` first; it approves once and acknowledges costs, preserving normal approvals later.
+  Call `decide_approval` with their option and the block's
   `args_digest`. The tool can decide a listed pending approval from a readable `get_task_status`
   approval block. The run does not need to start with this token. An owner or admin denial for a
   card that MCP cannot read stays in the dashboard because MCP cannot supply its digest. Treat

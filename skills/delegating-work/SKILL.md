@@ -56,6 +56,7 @@ A structured block has `readable` set to `true` and contains these fields:
 | `risk_tier` | The action's risk tier. |
 | `integration` | The integration label, when available. |
 | `summary` | The plain-language question the approval asks. |
+| `cost_disclosure` | Optional object on paid-integration cards. Its general_line and action_line explain the integration's costs. |
 | `args_digest` | The current argument digest for the decision call. |
 | `expires_at` | The decision deadline. |
 | `where` | The Patricia location for a manual decision. |
@@ -72,7 +73,7 @@ A prose-only block has `readable` set to `false`. It contains only `readable`, `
 
 For a structured block, use this sequence:
 
-1. Show the person `tool_label`, `risk_tier`, `integration`, `summary`, and `expires_at`.
+1. Show the person `tool_label`, `risk_tier`, `integration`, `summary`, and `expires_at`. Show both cost_disclosure lines when present.
 2. When `review_available` is `true`, read and show the full arguments as described below.
 3. Show the person each listed option and its `option_notes` entry when present.
 4. Offer exactly the choices in `options`.
@@ -90,6 +91,8 @@ For ordinary approvals:
 - `deny` rejects the current call.
 - `approve_run` approves once and requests a grant for eligible calls during this run.
 - `approve_tool_always` approves once and requests a durable grant for this tool.
+- `approve_integration_always` approves once and acknowledges the integration's costs for its requester.
+  Show `cost_disclosure` first. Later actions follow the person's normal approval settings.
 
 For `approval_kind="task_offer"`, show the returned `approval.task_offer_manifest` purpose, deliverables and lines
 when present. Show the exclusions and listed options before asking the person.
@@ -103,7 +106,7 @@ The per-fire resend policy below does not apply to offers.
 The decision result contains these fields:
 
 - `accepted` says that the asynchronous decision was accepted for processing. It is not the outcome.
-- `grant_requested` identifies a run grant, a tool grant, or no grant.
+- `grant_requested` identifies a run grant, a tool grant, integration cost acknowledgement, or no grant.
 - `grant_eligible` is a provisional pre-read. It is never a grant receipt.
 - `grant_note` explains the grant result.
 
