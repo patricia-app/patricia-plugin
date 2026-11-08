@@ -136,17 +136,19 @@ returns `prompt_for_your_own_memory`, a ready-made prompt for exactly this case.
 - `push_custom_skill` sends a local skill folder back: pass the folder name and the whole `SKILL.md`
   text, and the frontmatter supplies the rest, so there is no manifest to write. Pass the
   `expected_version_id` from your last read to update safely. If somebody published since, the push
-  is refused and reports the drift rather than overwriting their work. Only an owner or admin can
-  push a folder skill, and their push approves the version as it writes it, so `needs_approval` is
-  `false` on every push this token can make. A push writes a version and does not enable the skill:
-  `installed` says whether the workspace holds an install of it that you can see (a team one, or
-  your own personal one), and `next_step_code` names the one act still needed before Patricia runs
-  this version for you, with `next_step` as the sentence. The codes are `approve` (the version waits
-  on an owner or admin; a personal token's own push never produces it), `enable` (nothing enabled
-  it yet), `share` (a teammate's personal install holds the workspace's one slot, so ask them to
-  share it with the team), `update` (the workspace runs an earlier version) and `switch_on` (it is
-  enabled but paused). Both are null when nothing remains; until then Patricia does not run the
-  skill for you and `list_custom_skills` does not list it.
+  is refused and reports the drift rather than overwriting their work. Anyone who can create skills
+  can push. Outside `scripts/`, files ending .md, .txt, .csv, .json or .yaml are text. Every other
+  file, and everything under `scripts/`, is a script, and a version with a script waits for an owner
+  or admin to approve it, so `needs_approval` is `true`. A push under a new name with no script
+  lands the skill installed, on, and for you alone, unless it needs settings first. A push to a
+  skill that already exists writes a version only. `installed` says whether the workspace holds an
+  install of it that you can see (a team one, or your own personal one), and `next_step_code` names
+  the one act still needed before Patricia runs this version for you, with `next_step` as the
+  sentence. The codes are `approve` (the version waits on an owner or admin), `enable` (nothing
+  enabled it yet), `share` (a teammate's personal install holds the workspace's one slot, so ask
+  them to share it with the team), `update` (the workspace runs an earlier version) and `switch_on`
+  (it is enabled but paused, or needs settings). Both are null when nothing remains; until then
+  Patricia does not run the skill for you and `list_custom_skills` does not list it.
 - `list_custom_skills` and `read_custom_skill_file` are for editing a skill LOCALLY. They serve only
   the skills this workspace wrote, so you can pull one into `.claude/skills/<slug>/` and work on it
   here. Every file the listing names comes back as `text`, a `scripts/` file included, so the pulled
