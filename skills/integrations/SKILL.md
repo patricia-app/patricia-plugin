@@ -51,15 +51,19 @@ account through her delegated run. Follow the delegating-work skill for task sta
    Poll `get_task_status` with the `task_id` for the result. Do not call the tool again; Patricia runs the approved action once. A call after it finishes is a new request; current approval rules decide whether it asks first.
    Follow the `next` instruction: Billit saved reviews and approvals without stored requester identity can require the same call again.
    `read_integration_data`, `use_integration_tool` and `ask_patricia` share the same single-flight
-   and daily run limits. A read also waits while another task runs for this person.
-   The in-progress sentence is: "Another task for this person is already running as task <id>.
-   Poll it with get_task_status, or wait for it to finish."
+   and daily run limits.
+   A task waiting for an approval does not block a read that needs no approval of its own.
+   A blocked action names the pending approval and how to decide it.
+   For a running task, poll `get_task_status`, wait for it to finish, or use `cancel_task` for an `ask_patricia` task.
    Over the limits a call is refused with `[mcp_direct_dispatch_in_progress]` or
    `[mcp_delegation_in_progress]`, which name the `task_id` to poll, with
    `[mcp_delegation_daily_limit_reached]` until the next UTC day starts, or with
    `[mcp_delegation_admission_in_progress]` when another request for the same person is being
-   admitted. `[mcp_delegation_in_progress]` can also name a task that waits for an approval,
-   and `status` then holds that run's status. Retry `[mcp_delegation_admission_in_progress]` shortly; never retry the others in a loop.
+   admitted. Either in-progress refusal can also name a task that waits for an approval,
+   and `status` then holds that run's status.
+   That `task_id`, `status` and `approval` block belong to the blocking task: the refused call did not run,
+   so send it again after that task is decided.
+   Retry `[mcp_delegation_admission_in_progress]` shortly; never retry the others in a loop.
 
 ## Connect an integration
 
