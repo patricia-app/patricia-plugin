@@ -108,8 +108,12 @@ returns `prompt_for_your_own_memory`, a ready-made prompt for exactly this case.
 - The two integration tools are split by effect, and each refuses the other's refs.
   `read_integration_data` takes only a `read_only` `tool_ref` and changes nothing.
   `use_integration_tool` takes only a ref that can change data. Both run the action at once and
-  answer with `tool_result`, or with an `approval` block when Patricia's approval rules gate the
-  call. After approval, poll `get_task_status` with its task id for the result.
+  answer with `tool_result`. `use_integration_tool` can offer a native approval form in supported clients.
+  For `waiting_approval`, and for every gated `read_integration_data` call, show the approval and call
+  `decide_approval` here with the person's choice and digest.
+  The client never chooses for them. `accepted` queues `decision` for `task_id`; follow `next`, then poll `get_task_status`.
+  Cancel keeps an open approval waiting. An expired approval refuses with `approval_expired`.
+  A decided approval returns current task status or `already_resolved`.
   Do not call the tool again; Patricia runs the approved action once. A call after it finishes is a new request; current approval rules decide whether it asks first. Follow the `next` instruction: Billit saved reviews and approvals without stored requester identity can require the same call again.
 - `disconnect_integration` disconnects one connected integration. Pass the `account_id` that
   `list_integrations` returns. It needs `confirm_disconnect` set to `true` because it is destructive.
@@ -233,8 +237,8 @@ need one exact connected action.
   `grant_eligible` as a
   provisional pre-read, never a receipt. The worker re-checks eligibility for a durable (tool)
   grant. A run grant is bounded by this pre-read plus the runtime gate that re-runs the floor and
-  allowlist on every call. An unavailable grant pre-read removes grant options but does not remove
-  the approve or deny options. An ordinary approval still covers the current call once.
+  allowlist on every call. A grant choice absent from `options` refuses with `[grant_not_eligible]`.
+  Ask the person for another listed choice. For ordinary approvals, choose `approve` to approve the current call once.
   For `approval_kind="task_offer"`, show the returned `approval.task_offer_manifest` purpose, deliverables and lines
   when present. Show the exclusions and listed options before asking the person.
   Only the verified requester decides. `approve` approves eligible steps, excluding nonselectable and

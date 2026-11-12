@@ -55,6 +55,7 @@ A structured block has `readable` set to `true` and contains these fields:
 | `tool_label` | The human-readable tool label. |
 | `risk_tier` | The action's risk tier. |
 | `integration` | The integration label, when available. |
+| `account_label` | The connected account the action uses, when the person can see it. |
 | `summary` | The plain-language question the approval asks. |
 | `cost_disclosure` | Optional object on paid-integration cards. Its general_line and action_line explain the integration's costs. |
 | `args_digest` | The current argument digest for the decision call. |
@@ -94,6 +95,9 @@ For ordinary approvals:
 - `approve_integration_always` approves once and acknowledges the integration's costs for its requester.
   Show `cost_disclosure` first. Later actions follow the person's normal approval settings.
 
+A grant choice absent from `options` refuses with `[grant_not_eligible]`.
+Ask the person for another listed choice.
+
 For `approval_kind="task_offer"`, show the returned `approval.task_offer_manifest` purpose, deliverables and lines
 when present. Show the exclusions and listed options before asking the person.
 Only the verified requester decides. `approve` approves eligible steps, excluding nonselectable and
@@ -107,7 +111,7 @@ The decision result contains these fields:
 
 - `accepted` says that the asynchronous decision was accepted for processing. It is not the outcome.
 - `grant_requested` identifies a run grant, a tool grant, integration cost acknowledgement, or no grant.
-- `grant_eligible` is a provisional pre-read. It is never a grant receipt.
+- `grant_eligible` says whether the grant will be requested on the worker. It is never a grant receipt.
 - `grant_note` explains the grant result.
 
 A pending per-fire card can still be denied after `expires_at`, until Patricia expires it. Approving
@@ -151,6 +155,8 @@ Never change the person's choice.
 - `[approval_not_found]` means the approval request is not available to this connection.
 - `[approval_scope_required]` means this credential's role does not grant `runs:execute`.
 - `[not_your_decision]` means this connection cannot decide the request. Send the person to `where`.
+- `[grant_not_eligible]` means the grant choice is unavailable. Nothing was decided.
+  Read `get_task_status` and ask the person for another listed choice.
 - `[approval_expired]` means the request expired. Ask Patricia again to restart the work.
 - `[already_resolved]` means another decision reached the request. Poll the task before another action.
 - `[decision_needs_patricia]` means a per-fire write whose complete arguments cannot be shown here
