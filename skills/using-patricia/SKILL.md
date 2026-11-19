@@ -13,7 +13,7 @@ description: >-
   get_meeting_recordings, meeting, recording, transcript,
   disconnect_integration, share_integration, unshare_integration, share_with_team,
   switch_on_skill, switch_off_skill, confirm_switch_on,
-  start_onboarding_import, whoami, get_settings, update_settings, pat_mcp, pat_live.
+  start_onboarding_import, submit_feedback, whoami, get_settings, update_settings, pat_mcp, pat_live.
 ---
 
 # Using Patricia
@@ -38,6 +38,15 @@ answers depend on the person holding the credential: `list_skills`, `list_custom
 `use_integration_tool`, `get_task_status`, `list_files`, `read_file`, `search_files`, `list_memories`,
 `list_scheduled_tasks`, `get_meeting_recordings`, and `start_onboarding_import`. Read a refusal literally. It usually names
 the credential, not the tool.
+
+## Send tool feedback (private alpha)
+
+`submit_feedback` is available only on personal MCP connections from Patricia's internal workspace.
+Use it only when the current connection lists it.
+Show the person the summary, details, tool name, and proposed fix before sharing them with the internal team.
+Send the feedback with `confirm_share=true` only after the person explicitly agrees.
+Patricia includes the workspace ID.
+If Patricia cannot confirm delivery, check the channel before sending again.
 
 ## Give the local hooks a personal token
 
@@ -261,7 +270,7 @@ use, and disconnect.
 
 ## Transfer file bytes outside the conversation
 
-The MCP surface contains 40 tools. Use the existing file tools for each transfer mode.
+Use the file tools for each transfer mode.
 
 1. Send `content` or `content_base64` for an inline write.
 2. Declare `sha256`, `byte_size`, and `content_type` for a direct upload.
