@@ -5,7 +5,7 @@ description: >-
   session, and whenever a Patricia call is refused. Covers the memory scope decision, which read
   tool answers which question, what a personal token may and may not do, and how to hand real work
   over. Triggers on Patricia, patricia MCP, get_task_status, decide_approval, waiting_approval,
-  approval, remember, search_memory, list_memories, forget_memory, ask_patricia,
+  approval, remember, search_memory, list_memories, forget_memory, ask_patricia, list_conversations,
   workspace memory, personal memory, memory scope, create_file, update_file, delete_file,
   create_folder, share_file, publish_publicly, list_skills,
   list_integrations, list_integration_tools, read_integration_data, use_integration_tool,
@@ -35,9 +35,9 @@ type. Two credentials reach this server and they are not interchangeable.
 A tenant key answers for a workspace and names no person. It cannot write or run tools whose
 answers depend on the person holding the credential: `list_skills`, `list_custom_skills`,
 `read_custom_skill_file`, `list_integrations`, `list_integration_tools`, `read_integration_data`,
-`use_integration_tool`, `get_task_status`, `list_files`, `read_file`, `search_files`, `list_memories`,
-`list_scheduled_tasks`, `get_meeting_recordings`, and `start_onboarding_import`. Read a refusal literally. It usually names
-the credential, not the tool.
+`use_integration_tool`, `get_task_status`, `list_conversations`, `list_files`, `read_file`,
+`search_files`, `list_memories`, `list_scheduled_tasks`, `get_meeting_recordings`, and
+`start_onboarding_import`. Read a refusal literally. It usually names the credential, not the tool.
 
 ## Send tool feedback (private alpha)
 
@@ -212,11 +212,12 @@ A settings change through Patricia chat needs a click from the requesting person
 
 ## Hand real work over
 
-`ask_patricia` gives Patricia a free-form task and returns a task id. Poll it with
+`ask_patricia` gives Patricia a free-form task and returns `task_id` and `conversation_id`. Poll it with
 `get_task_status`. To stop it, call `cancel_task` with the task id, then poll `get_task_status`
 until the task ends. A cancel never undoes an action that already ran. When `answer`
-is a question, call `ask_patricia` again with the reply; the token's conversation continues. Use `list_integration_tools`, then `read_integration_data` or
-`use_integration_tool`, when you
+is a question, call `ask_patricia` again with the reply and that task's `conversation_id`.
+Use `list_conversations` to find earlier conversations. Pass `"new"` as `conversation_id` for a new topic.
+Use `list_integration_tools`, then `read_integration_data` or `use_integration_tool`, when you
 need one exact connected action.
 
 - Call `get_task_status` without `task_id` to list the pending approvals this person may read. The
@@ -264,7 +265,7 @@ use, and disconnect.
 
 ## Widening who can read something is an act you name
 
-`create_file` adds a workspace file. `share_file` can publish a dated public link, and it takes
+`create_file` adds a workspace file. `share_file` can publish a public link, with or without an end date, and it takes
 `publish_publicly` as a required argument with no default, because the caller has to name the act.
 `unshare_file` closes a link by the `link_id` that `share_file` returned.
 
@@ -336,9 +337,9 @@ Use an ordinary text read or the dashboard when `[download_unavailable]` names l
 ## Change and remove files
 
 `update_file` changes one file in one call: pass `content` for a new version, `name` to rename it,
-`folder_id` to move it into a folder, or `only_me` to change its level.
-True selects Only me; false selects My team. Only the author or a workspace admin can change the level.
-Only me closes existing file links; a shared folder's link still opens the file.
+`folder_id` to move it into a folder, or `access` to change who can open it. `restricted` selects
+Restricted; `workspace` opens it to everyone in the workspace. Only the owner or a workspace admin can
+change it. Moving it to Restricted closes existing file links; a shared folder's link still opens the file.
 Older versions stay readable through `read_file`. A move
 into a shared folder is refused with `folder_is_public` and nothing moves, because that move would
 publish the file. `share_file` publishes a file for anyone holding its link;
