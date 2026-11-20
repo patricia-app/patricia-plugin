@@ -100,8 +100,8 @@ Ask the person for another listed choice.
 
 For `approval_kind="task_offer"`, show the returned `approval.task_offer_manifest` purpose, deliverables and lines
 when present. Show the exclusions and listed options before asking the person.
-Only the verified requester decides. `approve` approves eligible steps, excluding nonselectable and
-recipient-pinned lines. Choose recipient-pinned lines in the dashboard or chat.
+Only the verified requester decides. `approve` approves eligible steps, excluding nonselectable,
+recipient-pinned and whole-ad-account lines. Choose those last two kinds in the dashboard or chat.
 `deny` declines pre-approval and continues under the normal approval rules; it does not stop the task.
 A requester without execution scope can withdraw with the full digest but receives no manifest values.
 Explain that value-free choice without inventing offer details. Neither grant choice is available for offers.
