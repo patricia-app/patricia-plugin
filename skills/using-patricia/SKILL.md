@@ -146,30 +146,39 @@ returns `prompt_for_your_own_memory`, a ready-made prompt for exactly this case.
   confirmation argument, because it only narrows what Patricia does. A skill that runs
   for everyone by default is turned off for the whole workspace. The result's `changed` is `false` when
   the skill was already off.
-- `push_custom_skill` sends a local skill folder back: pass the folder name and the whole `SKILL.md`
-  text, and the frontmatter supplies the rest, so there is no manifest to write. Pass the
-  `expected_version_id` from your last read to update safely. If somebody published since, the push
-  is refused and reports the drift rather than overwriting their work. Anyone who can create skills
-  can push. Outside `scripts/`, files ending .md, .txt, .csv, .json or .yaml are text. Every other
-  file, and everything under `scripts/`, is a script, and a version with a script waits for an owner
-  or admin to approve it, so `needs_approval` is `true`. A push under a new name with no script
-  lands the skill installed, on, and for you alone, unless it needs settings first. A push to a
-  skill that already exists writes a version only. `installed` says whether the workspace holds an
-  install of it that you can see (a team one, or your own personal one), and `next_step_code` names
-  the one act still needed before Patricia runs this version for you, with `next_step` as the
-  sentence. The codes are `approve` (the version waits on an owner or admin), `enable` (nothing
-  enabled it yet), `share` (a teammate's personal install holds the workspace's one slot, so ask
-  them to share it with the team), `update` (the workspace runs an earlier version) and `switch_on`
-  (it is enabled but paused, or needs settings). Both are null when nothing remains; until then
-  Patricia does not run the skill for you and `list_custom_skills` does not list it.
+- `push_custom_skill` sends a local skill folder back. Pass the folder name and the full `SKILL.md`
+  text with its frontmatter. Pass the current edit version ID as `expected_version_id` if you know it.
+  The current edit version is the active authored version, or the newest authored version if none is active.
+  The push refuses if the current edit version differs. After a version conflict, check the current edit version
+  in the skill's Versions tab. Reconcile your edits with that version before retrying with its ID.
+  Anyone who can create skills can push. Outside `scripts/`, files ending .md, .txt, .csv, .json or .yaml are text.
+  Everything else counts as a script. An owner or admin can approve a version with a script by
+  pushing it. A member's version with a script waits for an owner or admin to approve it, and
+  `needs_approval` is `true`. An approved push under a new name installs the skill for you alone
+  with either value of `update_install`. It starts on if its settings are complete. A default push
+  to an existing skill saves a version only. Pass `update_install=true` to pin the approved version
+  on an existing team install or your own personal install. Only an owner or admin with permission
+  to edit skills can use this option.
+  The install keeps its audience, on/off state, and compatible settings. For an install that is on,
+  the new version needs all its required settings. A push to an existing skill without an install
+  saves a version only. `installed` says whether you can see the install.
+  `next_step_code` names the act needed before Patricia runs this version for you. `next_step`
+  explains that act. The codes are `approve` (the version waits on an owner or admin), `enable`
+  (the skill needs an install), `share` (the install has a different audience), `update` (the
+  install pins a different version) and `switch_on` (the install is off). Both fields are null
+  when Patricia can use the pushed version for you. For your own personal install, open the skill's
+  Versions tab if your credential lacks permission to update the install through MCP. Select the
+  version you pushed. Choose **Go back to this version** if the button is available.
 - `list_custom_skills` and `read_custom_skill_file` are for editing a skill LOCALLY. They serve only
   the skills this workspace wrote, so you can pull one into `.claude/skills/<slug>/` and work on it
   here. Every file the listing names comes back as `text`, a `scripts/` file included, so the pulled
   folder is complete; `truncated` is `true` when one read did not hold the whole file. The listing's
   `archetype` says what each skill is: a `skill` is a folder you can push back, and an `instructions`
   skill is one `SKILL.md` written in the dashboard, readable here and edited there. A `SKILL.md` read
-  carries `settings`, the workspace's answers to the skill's declared settings as a run reads them,
-  and `settings_hidden` counts the rows the settings budget cut. Patricia's own
+  carries `settings` from the settings revision recorded on the install. `settings_hidden` counts the rows
+  the settings budget cut. The running version ID identifies the bundle. The latest version ID identifies
+  the newest authored version, which can be a proposal or a retired version. A difference between these IDs
+  describes version history and gives no approval or retry authority. Patricia's own
   catalog is not among them: a slug she ships answers exactly as an unknown one
   does, so do not read a missing answer as a permissions problem or retry it a different way. The
   `detail` on that answer says the same thing: to put a skill Patricia manages to work, call
