@@ -128,10 +128,12 @@ returns `prompt_for_your_own_memory`, a ready-made prompt for exactly this case.
   `list_integrations` returns. It needs `confirm_disconnect` set to `true` because it is destructive.
   A person can disconnect their own personal account. An owner or an admin can disconnect any
   account. Only `upstream_confirmed` set to `true` means the provider confirmed the revoke. The
-  result's `grant_shared_with_another_connection` value is `true` when another live connection keeps
-  the provider grant active. The person must not revoke it by hand when this field is `true`. The
-  result's `upstream` value says what the provider did. For `unsupported`, the person should also
-  remove Patricia in the app's own settings unless `grant_shared_with_another_connection` is `true`.
+  result's `grant_shared_with_another_connection` value is `true` when another live connection of
+  the same app may use the same provider grant. `dispose_only` is a stored instruction to preserve the grant, not a
+  report of what an earlier attempt did. Do not advise manual grant revocation when either field is
+  `true`. For `upstream` set to `unsupported` with `dispose_only` true, say "The saved connection was removed."
+  Otherwise, `unsupported` means no grant revoke was confirmed. If both fields are false, the person
+  may want to check the app's own settings.
 - `share_integration` lets the whole company use a personal integration account. Only the person
   who connected the account can share it, and the person needs account-edit authority, which owners
   and admins hold. It needs `share_with_team` set to `true` because it widens who can act through a

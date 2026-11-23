@@ -166,20 +166,24 @@ person's direction.
 - `superseded` is true when the account was reconnected after the disconnect and is active again.
 - `state_verified` is false when Patricia cannot read the current state. Then `superseded` and
   `integration` are null.
-- `grant_shared_with_another_connection` is true when another live connection keeps the provider
-  grant active. The person must not revoke the grant by hand when this field is true.
+- `grant_shared_with_another_connection` is true when another live connection of the same app may
+  use the same provider grant.
+- `dispose_only` is a stored instruction to preserve the grant. It does not report what an earlier
+  attempt did.
 - `upstream` is one of `revoked`, `unsupported`, `pending`, or `adapter_error`.
 - `upstream_confirmed` is true only when `upstream` is `revoked`.
 - `note` appears only when there is something the person must know.
 
+Do not advise manual grant revocation when `dispose_only` or `grant_shared_with_another_connection` is true.
 Tell the person what the `upstream` value means:
 
 - For `revoked`, say that the provider confirmed the revoke.
-- For `unsupported`, check `grant_shared_with_another_connection`. If it is true, say that another
-  connection keeps the provider grant active. Otherwise, tell the person to remove Patricia in the
-  app's own settings.
-- For `pending`, say that the provider revoke is pending and may be retried.
-- For `adapter_error`, report the adapter error. Say that a retry with the same input does not change it.
+- For `unsupported` with `dispose_only` true, say "The saved connection was removed."
+- Otherwise, for `unsupported`, say that no grant revoke was confirmed. If `grant_shared_with_another_connection`
+  is true, explain that another connection may still use the grant. If both fields are false,
+  suggest checking the app's own settings.
+- For `pending`, say that cleanup is unconfirmed and may be retried.
+- For `adapter_error`, say that Patricia could not confirm cleanup.
 
 ## Read disconnect refusals
 
