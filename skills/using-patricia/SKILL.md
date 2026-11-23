@@ -36,8 +36,9 @@ A tenant key answers for a workspace and names no person. It cannot write or run
 answers depend on the person holding the credential: `list_skills`, `list_custom_skills`,
 `read_custom_skill_file`, `list_integrations`, `list_integration_tools`, `read_integration_data`,
 `use_integration_tool`, `get_task_status`, `list_conversations`, `list_files`, `read_file`,
-`search_files`, `list_memories`, `list_scheduled_tasks`, `get_meeting_recordings`, and
-`start_onboarding_import`. Read a refusal literally. It usually names the credential, not the tool.
+`search_files`, `get_dashboard_validation`, `list_memories`, `list_scheduled_tasks`,
+`get_meeting_recordings`, and `start_onboarding_import`. Read a refusal literally.
+It usually names the credential, not the tool.
 
 ## Send tool feedback (private alpha)
 
@@ -347,10 +348,15 @@ Use an ordinary text read or the dashboard when `[download_unavailable]` names l
 
 ## Change and remove files
 
-`update_file` changes one file in one call: pass `content` for a new version, `name` to rename it,
-`folder_id` to move it into a folder, or `access` to change who can open it. `restricted` selects
-Restricted; `workspace` opens it to everyone in the workspace. Only the owner or a workspace admin can
-change it. Moving it to Restricted closes existing file links; a shared folder's link still opens the file.
+Use `get_dashboard_validation` to check complete HTML for an editable dashboard before saving.
+Send the same HTML with the next `offset` to read more findings. Each call uses the dashboard version saved at that time.
+A later save still checks permissions, storage quota, and the current version.
+
+`update_file` changes one file in one call. Pass `content` to save an ordinary text file.
+For a dashboard, encode the complete UTF-8 HTML as base64 and pass it in `content_base64`.
+Pass `name` to rename a file, `folder_id` to move it into a folder, or `access` to change who can open it.
+`restricted` selects Restricted; `workspace` opens it to everyone in the workspace.
+Only the owner or a workspace admin can change it. Moving it to Restricted closes existing file links; a shared folder's link still opens the file.
 Older versions stay readable through `read_file`. A move
 into a shared folder is refused with `folder_is_public` and nothing moves, because that move would
 publish the file. `share_file` publishes a file for anyone holding its link;
