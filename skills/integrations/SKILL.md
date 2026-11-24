@@ -54,11 +54,11 @@ account through her delegated run. Follow the delegating-work skill for task sta
    A decided approval returns current task status or `already_resolved`, without another execution.
    Poll `get_task_status` with the `task_id` for the result. Do not call the tool again; Patricia runs the approved action once. A call after it finishes is a new request; current approval rules decide whether it asks first.
    Follow the `next` instruction: Billit saved reviews and approvals without stored requester identity can require the same call again.
-   `read_integration_data`, `use_integration_tool` and `ask_patricia` share the same single-flight
-   and daily run limits.
+   `read_integration_data`, `use_integration_tool` and `ask_patricia` share the same daily run limits.
+   One direct read that Patricia can verify is safe to repeat and needs no approval can run beside a running `ask_patricia` task; other calls wait for it.
    A task waiting for an approval does not block a read that needs no approval of its own.
    A blocked action names the pending approval and how to decide it.
-   For a running task, poll `get_task_status`, wait for it to finish, or use `cancel_task` for an `ask_patricia` task.
+   For a running task, poll `get_task_status` and wait for it to finish. Do not cancel a task to free the slot. Use `cancel_task` only when the person asks to stop that task.
    Over the limits a call is refused with `[mcp_direct_dispatch_in_progress]` or
    `[mcp_delegation_in_progress]`, which name the `task_id` to poll, with
    `[mcp_delegation_daily_limit_reached]` until the next UTC day starts, or with
