@@ -13,6 +13,7 @@ description: >-
   get_meeting_recordings, meeting, recording, transcript,
   disconnect_integration, share_integration, unshare_integration, share_with_team,
   switch_on_skill, switch_off_skill, confirm_switch_on,
+  list_vault_logins, forget_vault_login, confirm_remove, saved Vault login,
   start_onboarding_import, submit_feedback, whoami, get_settings, update_settings, pat_mcp, pat_live.
 ---
 
@@ -37,7 +38,7 @@ answers depend on the person holding the credential: `list_skills`, `list_custom
 `read_custom_skill_file`, `list_integrations`, `list_integration_tools`, `read_integration_data`,
 `use_integration_tool`, `get_task_status`, `list_conversations`, `list_files`, `read_file`,
 `search_files`, `get_dashboard_validation`, `list_memories`, `list_scheduled_tasks`,
-`get_meeting_recordings`, and `start_onboarding_import`. Read a refusal literally.
+`get_meeting_recordings`, `list_vault_logins`, and `start_onboarding_import`. Read a refusal literally.
 It usually names the credential, not the tool.
 
 ## Send tool feedback (private alpha)
@@ -48,6 +49,17 @@ Show the person the summary, details, tool name, and proposed fix before sharing
 Send the feedback with `confirm_share=true` only after the person explicitly agrees.
 Patricia includes the workspace ID.
 If Patricia cannot confirm delivery, check the channel before sending again.
+
+## Manage saved Vault logins (private alpha)
+
+Use these tools only when the current connection lists them. They require a personal MCP token from the
+configured internal workspace with `tenant:read`. Builders cannot use them.
+
+- `list_vault_logins` lists your own saved website logins. It returns metadata such as the website and a
+  masked account label. Usernames and passwords stay in the Vault.
+- `forget_vault_login` permanently removes one saved login. Show the person the website, masked label, and saved date.
+  If these details match several logins, ask the person to select the login in the Vault dashboard.
+  Ask them to confirm removal of the selected login. After they confirm, use `login_id=<listed id>` and `confirm_remove=true`.
 
 ## Give the local hooks a personal token
 
